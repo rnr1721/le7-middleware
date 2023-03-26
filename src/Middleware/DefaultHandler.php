@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace Core\Middleware;
 
 use Psr\Http\Message\ResponseFactoryInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\RequestHandlerInterface;
 
 class DefaultHandler implements RequestHandlerInterface
 {

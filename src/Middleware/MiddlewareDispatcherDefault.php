@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core\Middleware;
 
-use Core\Middleware\Interfaces\MiddlewareDispatcher;
+use Core\Interfaces\MiddlewareDispatcher;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
