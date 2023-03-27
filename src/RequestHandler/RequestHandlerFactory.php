@@ -2,12 +2,14 @@
 
 declare(strict_types=1);
 
-namespace Core\Middleware;
+namespace Core\RequestHandler;
 
+use Core\Interfaces\MiddlewareDispatcher;
+use Core\RequestHandler\MiddlewareDispatcherDefault;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Container\ContainerInterface;
 
-class MiddlewaresFactory
+class RequestHandlerFactory
 {
 
     private ResponseFactoryInterface $responseFactory;
@@ -19,11 +21,11 @@ class MiddlewaresFactory
         $this->responseFactory = $responseFactory;
     }
 
-    public function usingContainer(array $middleware): Middlewares
+    public function usingContainer(array $middleware): MiddlewareDispatcher
     {
         $defaultHandler = new DefaultHandler($this->responseFactory);
 
-        $middlewares = new Middlewares($defaultHandler);
+        $middlewares = new MiddlewareDispatcherDefault($defaultHandler);
 
         foreach ($middleware as $class) {
             $item = $this->container->get($class);

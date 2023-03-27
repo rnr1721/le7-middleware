@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Middleware;
+namespace Core\RequestHandler;
 
 use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Server\MiddlewareInterface;

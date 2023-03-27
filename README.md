@@ -10,7 +10,7 @@ https://www.php-fig.org/psr/psr-15/
 
 ```php
 
-use Core\Middleware\MiddlewareDispatcherGeneric;
+use Core\RequestHandler\MiddlewareDispatcherGeneric;
 
         // $responseFactory is implementation of ResponseFactoryInterface
         $defaultRequestHandler = new DefaultHandler(responseFactory);

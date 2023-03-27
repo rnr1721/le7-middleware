@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Core\Middleware;
+namespace Core\RequestHandler;
 
 use Core\Interfaces\MiddlewareDispatcher;
 use Psr\Http\Server\MiddlewareInterface;
