@@ -22,7 +22,10 @@ use Core\RequestHandler\MiddlewareDispatcherGeneric;
         $middleware3 = new Middleware3();
         $middleware4 = new Middleware4();
 
-        // Add middlewares. It will be run in reverse order:
+        // If need to run in reverse order
+        $middleware->setReverse(true);
+
+        // Add middlewares. It will be run in reverse order (if turn on):
         // Default Handler at first, and 4,3,2,1 after
         $middlewares->add($middleware1);
         $middlewares->add($middleware2);

@@ -21,6 +21,7 @@ class MiddlewareDispatcherDefault implements MiddlewareDispatcher
 
     private RequestHandlerInterface $defaultHandler;
     private array $middlewares = [];
+    private bool $reverseOrder = false;
 
     public function __construct(RequestHandlerInterface $defaultRequestHandler)
     {
@@ -37,7 +38,12 @@ class MiddlewareDispatcherDefault implements MiddlewareDispatcher
 
         $element = $this->defaultHandler;
 
-        $middlewares = array_reverse($this->middlewares);
+        if ($this->reverseOrder) {
+            $middlewares = array_reverse($this->middlewares);
+        } else {
+            $middlewares = $this->middlewares;
+        }
+
         foreach ($middlewares as $middleware) {
             $element = new MiddlewareHandler($middleware, $element);
         }
@@ -54,6 +60,11 @@ class MiddlewareDispatcherDefault implements MiddlewareDispatcher
     {
         $this->middlewares[] = $middleware;
         return $this;
+    }
+
+    public function setReverse(bool $on): void
+    {
+        $this->reverseOrder = $on;
     }
 
 }

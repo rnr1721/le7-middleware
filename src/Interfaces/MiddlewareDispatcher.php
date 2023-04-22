@@ -14,4 +14,11 @@ interface MiddlewareDispatcher extends RequestHandlerInterface
      * @return self
      */
     public function add(MiddlewareInterface $middleware): self;
+    
+    /**
+     * Set reverse order of middleware execution
+     * @param bool $on
+     * @return void
+     */
+    public function setReverse(bool $on):void;
 }

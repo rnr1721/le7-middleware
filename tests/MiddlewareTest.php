@@ -43,6 +43,7 @@ class MiddlewareTest extends PHPUnit\Framework\TestCase
         $middlewares->add($middleware2);
         $middlewares->add($middleware3);
         $middlewares->add($middleware4);
+        $middlewares->setReverse(true);
         $response = $middlewares->handle($r);
 
         $response->getBody()->rewind();
