@@ -67,4 +67,18 @@ class MiddlewareDispatcherDefault implements MiddlewareDispatcher
         $this->reverseOrder = $on;
     }
 
+    public function getReadyNames(): array
+    {
+        $output = [];
+        if ($this->reverseOrder) {
+            $result = array_reverse($this->middlewares);
+        } else {
+            $result = $this->middlewares;
+        }
+        foreach ($result as $item) {
+            $output[] = get_class($item);
+        }
+        return $output;
+    }
+
 }

@@ -21,4 +21,10 @@ interface MiddlewareDispatcher extends RequestHandlerInterface
      * @return void
      */
     public function setReverse(bool $on):void;
+    
+    /**
+     * Get names array of already added middleware
+     * @return array
+     */
+    public function getReadyNames(): array;
 }
