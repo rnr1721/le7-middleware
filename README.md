@@ -13,7 +13,8 @@ https://www.php-fig.org/psr/psr-15/
 use Core\RequestHandler\MiddlewareDispatcherGeneric;
 
         // $responseFactory is implementation of ResponseFactoryInterface
-        $defaultRequestHandler = new DefaultHandler(responseFactory);
+        $response = $responseFactory->createResponse(404);
+        $defaultRequestHandler = new DefaultHandler($response);
         $middlewares = new MiddlewareDispatcherDefault($defaultRequestHandler);
 
         // Middlewares are implementation of MiddlewareInterface
@@ -90,6 +91,35 @@ class TestMiddleware implements MiddlewareInterface
         $response = $handler->handle($request);
 
         return $response->withStatus(201);
+    }
+
+}
+
+```
+
+```php
+
+<?php
+
+declare(strict_types=1);
+
+namespace Middleware;
+
+use Psr\Http\Server\RequestHandlerInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+
+class TestMiddleware implements MiddlewareInterface
+{
+
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        
+        // do something
+
+        // To next handler
+        return $handler->handle($request);
     }
 
 }

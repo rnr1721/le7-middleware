@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace Core\RequestHandler;
 
+use Core\Interfaces\MiddlewareHandler;
 use Core\Interfaces\MiddlewareDispatcher;
 use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -19,11 +19,11 @@ use Psr\Http\Message\ServerRequestInterface;
 class MiddlewareDispatcherDefault implements MiddlewareDispatcher
 {
 
-    private RequestHandlerInterface $defaultHandler;
+    private MiddlewareHandler $defaultHandler;
     private array $middlewares = [];
     private bool $reverseOrder = false;
 
-    public function __construct(RequestHandlerInterface $defaultRequestHandler)
+    public function __construct(MiddlewareHandler $defaultRequestHandler)
     {
         $this->defaultHandler = $defaultRequestHandler;
     }
@@ -36,6 +36,7 @@ class MiddlewareDispatcherDefault implements MiddlewareDispatcher
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
 
+        /** @var MiddlewareHandler $element */
         $element = $this->defaultHandler;
 
         if ($this->reverseOrder) {
@@ -45,7 +46,7 @@ class MiddlewareDispatcherDefault implements MiddlewareDispatcher
         }
 
         foreach ($middlewares as $middleware) {
-            $element = new MiddlewareHandler($middleware, $element);
+            $element = new MiddlewareHandlerDefault($middleware, $element);
         }
 
         return $element->handle($request);

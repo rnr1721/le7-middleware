@@ -4,24 +4,28 @@ declare(strict_types=1);
 
 namespace Core\RequestHandler;
 
-use Psr\Http\Message\ResponseFactoryInterface;
+use Core\Interfaces\MiddlewareHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
-class DefaultHandler implements RequestHandlerInterface
+class DefaultHandler implements MiddlewareHandler
 {
 
-    private ResponseFactoryInterface $responseFactory;
+    private ResponseInterface $response;
 
-    public function __construct(ResponseFactoryInterface $responseFactory)
+    public function __construct(ResponseInterface $response)
     {
-        $this->responseFactory = $responseFactory;
+        $this->response = $response;
     }
 
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
-        return $this->responseFactory->createResponse(404, 'Not found');
+        return $this->response;
     }
 
+    public function withResponse(ResponseInterface $response): MiddlewareHandler
+    {
+        return new self($response);
+    }
+    
 }

@@ -23,7 +23,8 @@ class RequestHandlerFactory
 
     public function usingContainer(array $middleware): MiddlewareDispatcher
     {
-        $defaultHandler = new DefaultHandler($this->responseFactory);
+        $response = $this->responseFactory->createResponse(404);
+        $defaultHandler = new DefaultHandler($response);
 
         $middlewares = new MiddlewareDispatcherDefault($defaultHandler);
 

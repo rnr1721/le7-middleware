@@ -4,18 +4,18 @@ declare(strict_types=1);
 
 namespace Core\RequestHandler;
 
+use Core\Interfaces\MiddlewareHandler;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
-use Psr\Http\Server\RequestHandlerInterface;
 
-class MiddlewareHandler implements RequestHandlerInterface
+class MiddlewareHandlerDefault implements MiddlewareHandler
 {
 
     private MiddlewareInterface $middleware;
-    public RequestHandlerInterface $requestHandler;
+    public MiddlewareHandler $requestHandler;
 
-    public function __construct(MiddlewareInterface $middleware, RequestHandlerInterface $requestHandler)
+    public function __construct(MiddlewareInterface $middleware, MiddlewareHandler $requestHandler)
     {
         $this->middleware = $middleware;
         $this->requestHandler = $requestHandler;
@@ -28,7 +28,9 @@ class MiddlewareHandler implements RequestHandlerInterface
 
     public function withResponse(ResponseInterface $response): MiddlewareHandler
     {
+        /** @var MiddlewareHandler $ */
         $newHandler = clone $this;
+        
         $newHandler->requestHandler = $newHandler->requestHandler->withResponse($response);
         return $newHandler;
     }

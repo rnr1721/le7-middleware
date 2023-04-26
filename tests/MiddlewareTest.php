@@ -32,7 +32,8 @@ class MiddlewareTest extends PHPUnit\Framework\TestCase
     {
         $r = $this->createServerRequest('https://example.com/test/test1', 'GET');
 
-        $defaultRequestHandler = new DefaultHandler($this->responseFactory);
+        $response = $this->responseFactory->createResponse(404);
+        $defaultRequestHandler = new DefaultHandler($response);
         $middlewares = new MiddlewareDispatcherDefault($defaultRequestHandler);
 
         $middleware1 = new Middleware1();
