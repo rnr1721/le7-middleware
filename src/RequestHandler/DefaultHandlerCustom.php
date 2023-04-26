@@ -23,4 +23,9 @@ class DefaultHandlerCustom implements RequestHandlerInterface
         return $this->response;
     }
 
+    public function withResponse(ResponseInterface $response): RequestHandlerInterface
+    {
+        return new self($response);
+    }
+    
 }

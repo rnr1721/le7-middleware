@@ -13,7 +13,7 @@ class MiddlewareHandler implements RequestHandlerInterface
 {
 
     private MiddlewareInterface $middleware;
-    private RequestHandlerInterface $requestHandler;
+    public RequestHandlerInterface $requestHandler;
 
     public function __construct(MiddlewareInterface $middleware, RequestHandlerInterface $requestHandler)
     {
@@ -26,4 +26,11 @@ class MiddlewareHandler implements RequestHandlerInterface
         return $this->middleware->process($request, $this->requestHandler);
     }
 
+    public function withResponse(ResponseInterface $response): MiddlewareHandler
+    {
+        $newHandler = clone $this;
+        $newHandler->requestHandler = $newHandler->requestHandler->withResponse($response);
+        return $newHandler;
+    }
+    
 }
