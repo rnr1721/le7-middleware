@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace Core\RequestHandler;
 
-use Core\Interfaces\MiddlewareHandler;
-use Core\Interfaces\MiddlewareDispatcher;
+use Core\Interfaces\MiddlewareHandlerInterface;
+use Core\Interfaces\MiddlewareDispatcherInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -16,14 +16,14 @@ use Psr\Http\Message\ServerRequestInterface;
  * An HTTP request handler process an HTTP request in order to produce an
  * HTTP response.
  */
-class MiddlewareDispatcherDefault implements MiddlewareDispatcher
+class MiddlewareDispatcherDefault implements MiddlewareDispatcherInterface
 {
 
-    private MiddlewareHandler $defaultHandler;
+    private MiddlewareHandlerInterface $defaultHandler;
     private array $middlewares = [];
     private bool $reverseOrder = false;
 
-    public function __construct(MiddlewareHandler $defaultRequestHandler)
+    public function __construct(MiddlewareHandlerInterface $defaultRequestHandler)
     {
         $this->defaultHandler = $defaultRequestHandler;
     }
@@ -36,7 +36,7 @@ class MiddlewareDispatcherDefault implements MiddlewareDispatcher
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
 
-        /** @var MiddlewareHandler $element */
+        /** @var MiddlewareHandlerInterface $element */
         $element = $this->defaultHandler;
 
         if ($this->reverseOrder) {

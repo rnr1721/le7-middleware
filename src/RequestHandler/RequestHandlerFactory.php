@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace Core\RequestHandler;
 
-use Core\Interfaces\MiddlewareDispatcher;
+use Core\Interfaces\MiddlewareDispatcherInterface;
 use Core\RequestHandler\MiddlewareDispatcherDefault;
 use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Container\ContainerInterface;
@@ -15,13 +15,16 @@ class RequestHandlerFactory
     private ResponseFactoryInterface $responseFactory;
     private ContainerInterface $container;
 
-    public function __construct(ContainerInterface $container, ResponseFactoryInterface $responseFactory)
+    public function __construct(
+            ContainerInterface $container,
+            ResponseFactoryInterface $responseFactory
+            )
     {
         $this->container = $container;
         $this->responseFactory = $responseFactory;
     }
 
-    public function usingContainer(array $middleware): MiddlewareDispatcher
+    public function usingContainer(array $middleware): MiddlewareDispatcherInterface
     {
         $response = $this->responseFactory->createResponse(404);
         $defaultHandler = new DefaultHandler($response);

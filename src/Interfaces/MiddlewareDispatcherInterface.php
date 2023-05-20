@@ -5,7 +5,7 @@ namespace Core\Interfaces;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-interface MiddlewareDispatcher extends RequestHandlerInterface
+interface MiddlewareDispatcherInterface extends RequestHandlerInterface
 {
     /**
      * Add own middleware
